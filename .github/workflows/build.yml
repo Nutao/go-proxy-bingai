@@ -1,8 +1,8 @@
 name: Build Go-Proxy-BingAI
 on:
   push:
-    branches:
-      - dev
+    tags:
+      - v*
 
 jobs:
   release:
