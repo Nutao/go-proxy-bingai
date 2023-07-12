@@ -3,6 +3,8 @@ package helper
 import (
 	"adams549659584/go-proxy-bingai/common"
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -42,7 +44,11 @@ func CheckAuth(r *http.Request) bool {
 	isAuth := true
 	if len(common.AUTH_KEY) > 0 {
 		ckAuthKey, _ := r.Cookie(common.AUTH_KEY_COOKIE_NAME)
-		isAuth = ckAuthKey != nil && len(ckAuthKey.Value) > 0 && common.AUTH_KEY == ckAuthKey.Value
+		if nil == ckAuthKey {
+			return false
+		}
+		log.Println(fmt.Sprintf("Try Auth Key:%s ====> %v", ckAuthKey.Value, common.AUTH_KEY == ckAuthKey.Value))
+		isAuth = len(ckAuthKey.Value) > 0 && common.AUTH_KEY == ckAuthKey.Value
 	}
 	return isAuth
 }

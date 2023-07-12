@@ -173,7 +173,7 @@ func NewSingleHostReverseProxy(target *url.URL) *httputil.ReverseProxy {
 			for _, delLocationDomain := range DEL_LOCATION_DOMAINS {
 				if strings.HasPrefix(location, delLocationDomain) {
 					res.Header.Set("Location", location[len(delLocationDomain):])
-					log.Println("Del Location Domain ：", location)
+					log.Println("Del Location Domain:", location)
 					log.Println("RandIP : ", randIP)
 					// 换新ip
 					randIP = GetRandomIP()
