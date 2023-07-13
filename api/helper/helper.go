@@ -44,11 +44,10 @@ func CheckAuth(r *http.Request) bool {
 	isAuth := true
 	if len(common.AUTH_KEY) > 0 {
 		ckAuthKey, _ := r.Cookie(common.AUTH_KEY_COOKIE_NAME)
-		if nil == ckAuthKey {
-			return false
+		isAuth = ckAuthKey != nil && len(ckAuthKey.Value) > 0 && common.AUTH_KEY == ckAuthKey.Value
+		if ckAuthKey != nil {
+			log.Println(fmt.Sprintf("Try Auth Key:%s ====> %v", ckAuthKey, isAuth))
 		}
-		log.Println(fmt.Sprintf("Try Auth Key:%s ====> %v", ckAuthKey.Value, common.AUTH_KEY == ckAuthKey.Value))
-		isAuth = len(ckAuthKey.Value) > 0 && common.AUTH_KEY == ckAuthKey.Value
 	}
 	return isAuth
 }
